@@ -1,0 +1,58 @@
+.write  {
+
+
+
+}
+
+
+
+.writeForm  {
+
+    display: flex;
+    flex-direction: column;
+    margin : 20px 20px 0px 380px;
+    gap : 20px;
+}
+
+.formInput  {
+
+    width : 500px;
+    padding : 10px;
+    background-color:#0071c2;
+    border-radius: 10px;
+    font-size: 20px;
+    
+}
+
+
+.publishBtn  {
+
+    width : 520px;
+    padding : 15px;
+    background-color: #0071c2;
+    border-radius: 10px;
+    color : white;
+    font-size : 15px;
+}
+
+input::placeholder{
+    color : white;
+}
+textarea::placeholder{
+
+    color : white;
+}
+input {
+
+    color : white;
+}
+textarea{
+    color : white;
+}
+
+.writeBlogTitle  {
+
+    margin-top: 100px;
+    color : #0071c2;
+    
+}

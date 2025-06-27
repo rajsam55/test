@@ -1,0 +1,149 @@
+
+
+.header  {
+
+    width : 100%;
+    max-width : 1024;
+    height : 500px;
+    background-color:#0071c2;
+
+
+
+}
+.headercontainer  {
+
+    width  : 100%;  
+    background-color: #0071c2;
+}
+
+
+
+.headerList  {
+
+       
+    display : flex;
+    width : 100%;
+    max-width : 1000px;
+    justify-content: space-between;
+    background-color: #0071c2;
+    margin : 0px 20px 0px 100px;
+    gap : 20px;    
+    
+    color : white;
+    
+    
+
+    
+}
+.headerItems {
+
+    display : flex;
+    height : 300px;
+    margin-top: 50px;
+    
+
+}
+
+.headerItem1  {
+
+    flex : 1;
+    
+    
+    
+}
+.headerParts {
+
+    display: flex;
+    align-items : center;
+    margin-top: 60px;
+    
+}
+
+
+.headerItem2 {
+
+    flex : 1;
+    text-align: left;
+    color : white;
+    
+     
+
+}
+
+.headerText {
+
+    font-weight: 600;
+    font-size : 40px;
+
+}
+
+.headerImg  {
+
+
+    width : 300px;
+    height : 300px;
+
+    border-radius: 50px;
+    margin-left: 30px;
+}
+
+.fashionFind{
+
+    display: flex;
+    flex-direction: column;
+    
+
+    
+}
+.options {
+    
+    display : flex;
+    justify-content:space-between;
+    margin-top: 20px;
+    gap : 10px;
+
+
+}
+
+.mainBtn{
+
+    display: flex;
+    gap : 10px;
+
+       
+    
+}
+.disableRoom , .disableChildren, .disableAdult{
+
+    cursor : not-allowed;
+}
+.headerSearch {
+
+    display : flex;
+    width : 100%;
+    width : 700px;
+    justify-content: space-between;
+    margin : 20px 100px 0px 300px;
+    color : white;
+    margin-top: 40px;
+}
+.columnItems {
+
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+.options {
+    color : black;
+    margin-top: 40px;
+}
+.clkBtn  {
+
+    background-color: green;
+    color : white;
+    border-radius: 10px;
+    padding : 10px;
+    cursor : pointer;
+    border : 1px solid gray;
+}

@@ -1,0 +1,55 @@
+.featured  {
+
+    
+    
+
+    
+}
+
+
+
+.featuredCont {
+
+
+    
+    width : 100%;
+    max-width: 1024px;
+    display : flex;
+    justify-content: space-between;
+    
+    object-fit  : cover;
+    margin : 10px 100px 0px 100px;
+    height : 200px;
+    
+    
+    
+
+
+}
+
+.featuredItems  {
+
+    display: flex;
+    flex-direction: column;
+    color : black;
+    font-weight: bold;
+    margin : 0px 0px 10px 0px;
+    
+     
+    
+
+    
+
+}
+
+
+.featuredText {
+
+    margin-top: -100px;
+    color : white;
+}
+.propertyText {
+
+    color : white;
+    margin-bottom: 60px;
+}

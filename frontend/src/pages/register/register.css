@@ -1,0 +1,51 @@
+
+
+
+.register {
+
+    width : 100%;
+    max-width:1024px;
+
+    
+}
+
+.formRegister {
+
+    display: flex;
+    flex-direction: column;
+    width : 600px;
+    margin : 100px 20px 0px 300px;
+    gap  : 20px;
+    
+
+
+
+
+}
+
+.inputForm{
+
+    padding : 10px;
+    border-radius : 10px;
+    background-color:green;
+}
+
+.formBtn {
+
+     padding : 10px;
+     border-radius : 10px;
+     background-color: green;
+     color : white;
+     font-size : 15px;
+     cursor : pointer;
+}
+
+input {
+
+    color : black;
+}
+
+input::placeholder {
+
+    color : black;
+}

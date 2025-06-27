@@ -1,0 +1,26 @@
+.singlePost {
+
+
+    width : 100%;
+    max-width : 1024px;
+    display: flex;
+    flex-direction: column;
+    margin : 10px 10px 0px 150px;
+    gap : 20px;
+
+
+
+
+
+}
+
+.singlePostImg  {
+
+    width : 100%;
+    width : 900px;
+    height : 500px;
+    margin : 20px 30px 0px 60px;
+    
+    
+
+}

@@ -1,0 +1,114 @@
+.navbar {
+
+    
+    width : 100%;
+    max-width : 1024;
+    height : 100px;
+    background-color: #0071c2;
+    
+    
+    
+}
+.navbarContainer  {
+
+    display : flex;
+    justify-content: space-between;
+    align-items : center;
+    margin : 0px 20px 0px 20px;
+    gap : 10px;
+    
+    
+    
+}
+.navBarSearch {
+
+    width : 100%;
+    max-width : 600px;
+    border : 1px solid black;
+    border-radius: 15px;
+    padding : 3px;
+    display : flex;
+    align-items : center;
+    margin-top: 20px;
+}
+
+
+
+.navbarItems {
+
+    
+    display : flex;
+    gap : 10px;
+    
+}
+.btnItems {
+
+    border-radius: 5px;
+    border : none;
+    color : blueviolet;
+    padding : 5px;
+    background-color: white;
+    cursor : pointer;
+}
+.logoItems{
+
+    
+    display: flex;
+    align-items: center;
+    
+    
+
+}
+.navBarSearchInput {
+
+    width : 565px;
+    border : none;
+    padding : 15px;
+    border-radius  : 15px;
+    align-items :center;
+
+
+}
+.navSearchImg {
+
+    
+    color : pink;
+    margin : 5px;
+    cursor  : pointer;
+    background-color: gray;
+    
+}
+.navBarSearchInput>img {
+
+    background-color: yellow;
+    color : red;
+}
+.logoTitle {
+
+    color : white;
+    border : none;
+    margin : 0px 0px 0px 10px;
+}
+.link {
+
+    border : none;
+    text-decoration: none;;
+}
+
+.handleBtn {
+
+    background-color: #0071c2;
+    
+    color : white;
+}
+
+.logOutBtn {
+
+    color : white;
+    border : none;
+    padding : 10px;
+    width : 70px;
+    background-color: #0071c2;
+    margin-top: 10px;
+    cursor : disabled;
+}
