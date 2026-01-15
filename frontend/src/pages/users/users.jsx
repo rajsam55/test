@@ -3,6 +3,7 @@ import {useState, useEffect, useContext} from "react"
 import Navbar from "../../components/navbar/navbar"
 import { Context } from "../../context/Context"
 import { Link } from "react-router-dom"
+import User from "../user/user"
 
 
 
@@ -14,10 +15,6 @@ import { Link } from "react-router-dom"
 const Users = ()=>{
 
 
-    const {user}  = useContext(Context)
-
-    
-    
     const [users, setUsers]  =  useState([])
 
     
@@ -60,26 +57,14 @@ const Users = ()=>{
 
             getUsers()
 
-        },[user])
-
-        
-        
-
-
-
-            
-
-    
-
-
-
+        },[])
 
 
 
     return(
 
     
-    <div className="">
+    <div className="users">
     
 
     
@@ -87,18 +72,9 @@ const Users = ()=>{
     { users.map(user=>(
 
         
-        <div className="usersDtls"  key = {user.name}>
+        <div className="usersDtls"  key = {user.id}>
 
-            <h1>Users</h1>
-
-
-        <Link><span className="spanDtls">{user.username}</span></Link>
-        <span className="">{user.password}</span>
-        <span className="">{user.email}</span>
-        
-
-
-
+            <User user = {user} />
 
 
         </div>

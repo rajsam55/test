@@ -2,96 +2,64 @@ import "./header.css"
 
 
 
-const Header = ()=>{
-
-    
-
-
-           
+const Header = () => {
 
 
 
-    
 
-    return(
+
+
+
+
+
+
+    return (
 
         <div className="header">
-        <div className="headerContainer">
 
-        
-
-        <div className="headerList">
-
-        <span className="">Gifts</span>
-        <span className="">Home Favorites</span>
-        <span className="">Fashion Finds</span>
-        <span className="">Fashion Finds</span>
-
-        </div>
-
-        <div className="headerParts">
-
-        <div className="headerItem1">
-
-        <img src="https://cf.bstatic.com/xdata/images/hotel/square240/427678099.webp?k=a8ff2c47360b54cf8ae980dbbcbb53d111fe1b0488776f7d8ba27756602cb775&o=" alt="" className="headerImg" />
+            <div className="h-container">
 
 
+                <div className="h-left">
+
+                    <span className="topText">More than faster</span>
+
+                    <span className="">Be The Fastest</span>
+                    <span className="">In Delivering</span>
+                    <span className="">Your <span className="" style={{ color: "orange" }}>Pizza</span></span>
+
+                    <span className="miniText">Our mission is to give an efficient & reliable service to our customers without any hassle.</span>
+
+                    <button className="btn">Get Started</button>
 
 
-        </div>
-         <div className="headerItem2">
-        <h1 className="">Enjoy 50% Discount this season!</h1>
-        <h2>Click here to find out more</h2>
-        <button className="clkBtn">Click Now</button>
+                </div>
 
 
 
-         </div>
+                <div className="h-right">
 
-         </div>
+                    <div className="image-container">
 
-         <div className="headerSearch">
-        <span className="">bed</span>
-        <span className="">taxi</span>
-        <span className="">Free parking</span>
-        <span className="">Restaurants</span>
+                        <img src="/images/heroImage2.png" alt="" className="img" />
 
-        
+                    </div>
+
+                </div>
 
 
 
 
-         </div>
-
-        
 
 
+            </div>
 
 
         </div>
-        
-        
-        </div>
-
-        
-
-
-
-        
-
-        
-        
-        
-        
 
 
 
 
-        
-            
-
-
-        
     )
 }
 

@@ -1,10 +1,10 @@
 import "./write.css"
-import {useState, useContext} from "react"
-import {useLocation, useNavigate}  from "react-router-dom"
+import { useState } from "react"
 import axios from "axios"
-import { Context } from "../../context/Context"
-import Navbar from "../../components/navbar/navbar"
-import Header from "../../components/header/header"
+import { Link, useNavigate } from "react-router-dom"
+import { AdvancedImage } from "@cloudinary/react"
+import { Cloudinary } from "@cloudinary/url-gen"
+import { useSelector } from "react-redux"
 
 
 
@@ -12,184 +12,265 @@ import Header from "../../components/header/header"
 
 
 
-const Write = ()=>{
-
-    const [file, setFile]  = useState(null)
-    const [title,setTitle] = useState("")
-    const [desc, setDesc]  = useState("")
-    const {user}  = useContext(Context)
-    
-
-    
-
-
-
-        const handleSubmit = async()=>{
-
-            const newPost =  {
-
-
-                username : user.username,
-                title, desc
-            }
-        if(file){
-
-
-
-            const data = new FormData()
-            const filename = Date.now()  + file.filename          
-
-
-        
-            data.append("file",file)
-            data.append("name", filename)
-            newPost.photo = filename
-
-
-
-            try{
-
-                await axios.post("http://localhost:6500/api/upload", data)
-
-                
-                console.log(data)
-
-
-
-            }
-            catch(err){
 
 
 
 
-            }
-
-
-            
-        }              
-
-            
-
-            try  {
-
-
-                const res = await axios.post("http://localhost:6500/api/upload", newPost)
-
-                window.location.replace("/")
 
 
 
-
-            }
-
-            catch(err){
+const Write = () => {
 
 
 
+    const user = useSelector(state=>state.user)
 
-            }           
+    const isAuthenticated = useSelector(state=>state.user.isAuthenticated)
 
 
-                       
+    const [postImg, setPostImg] = useState("")
+
+    console.log(postImg)
+
+    const [title, setTitle] = useState("")
+    const [desc, setDesc] = useState("")
+
+    const [post, setPost] = useState({
+
+        title : "",
+        desc : ""
+    })
+    const navigate = useNavigate()
+
+    const imageUploadHandler = (e)=>{
+
+        const file = e.target.files[0]
+
+        transformFile(file)
+
+
+    }
+
+    const transformFile = (file)=>{
+
+
+        const reader = new FileReader()
+
+        if(file)  {
+
+
+        reader.readAsDataURL(file)
+
+        reader.onloadend = ()=>{
+
+
+            setPostImg(reader.result)
+
         }
 
 
+        }else{
+
+            setPostImg("")
+        }
+
+
+
+
+    }
+
+
+
+
+
+    const handleSubmit = async (e) => {
+
+        e.preventDefault()
         
+        const newPost = {
 
-          
-    
+            username : user.username,
+            title : post.title,
+            desc  : post.desc,
+            image : postImg           
+                        
 
-    return(
+        }
 
-        <> 
-
-        <Navbar/>
-        <Header/>
-
-        <div className="write">
-
-        <h1 className="writeBlogTitle">Write New Blog</h1>
-
-        { file && <img src= {URL.createObjectURL(file)} alt="" className="" width = {700} height = {500} />}
-
-        <div className="writeFormGroup">
-
-
-
-        <form action="" className="formInput"  onSubmit =  {handleSubmit}>
-
-        
-
-        <label htmlFor="fileInput" className="">
+                   
 
 
 
 
-        </label>
-        
 
 
 
-        <input 
-        
-        
-        type = "file" className="formInput" 
+        try {
 
-        
+            const res = await axios.post(`http://localhost:6500/api/posts/`, newPost)
+
+            setPost(res.data)
+
+            
+
+
+
+            console.log(res.data)
+
+            navigate("/")
+
+
+
+        }
+        catch (err) {
+
+
+
+        }
+
+
+    }
+
+
+
+    return (
+
+
+        <>
+
+
+
+
+
+            <div className="write">
+
+
+
 
                 
 
-        onChange = {(e)=>setFile(e.target.files[0])}
 
-        
-        
-        
-        />
+                {isAuthenticated ? <div className="writeFormGroup">
 
-        <input type="text" className="formInput" 
+                    <h1 className="writeBlogTitle">Write New Blog</h1>
 
-        onChange = {(e)=>setTitle(e.target.value)}
-        placeholder =  "title"
-        
-        
-        
-        
-        
-        />
-
-
-        <input type="text" className="formInput" 
-
-        onChange = {(e)=>setDesc(e.target.value)}
-        placeholder =  "desc"
-        
-        
-        
-        
-        
-        />
-
-        
-
-        
-
-
-        <button type = "submit" className="publishBtn">Publish</button>
-
-
-        </form>
-
-        
-
-        </div>
+                    <img src={postImg} alt="" className="" width={25} height={25} />
 
 
 
-        </div>
+
+
+
+
+                    <form className="" onSubmit={handleSubmit} >
+
+                        <label htmlFor="fileInput" className="">
+
+
+
+
+
+
+                        </label>
+
+
+                        <input type="file" className="formInputs"
+
+                            onChange={imageUploadHandler}
+
+                            accept = "image/"
+
+
+                        />
+
+                        <input type="text" className="formInputs"
+
+
+                            onChange={(e) => setPost({...post, title :e.target.value})}
+
+                            placeholder="title"
+
+                            value = {post.title}
+
+                            
+
+                            
+
+                            
+
+
+
+
+
+
+
+
+
+
+
+                        />
+
+
+                        <input type="text" className="formInputs"
+
+
+                            onChange={(e) => setPost({...post, desc : e.target.value})}
+
+                            placeholder="desc"
+
+                            
+
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+                        />
+
+
+
+
+                        <button className="publishBtn" type="submit">Publish</button>
+
+
+
+
+                    </form>
+
+
+                </div>
+                
+                
+                :
+
+
+                <Link to = "/login"><span className="">Please Login to Create new Blog</span></Link>
+                
+                
+                
+                
+                
+                }
+
+
+
+            </div>
 
         </>
     )
 }
+
+
+
+
 export default Write
 
 

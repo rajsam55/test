@@ -1,26 +1,140 @@
 .singlePost {
 
+    flex : 9;
+    margin : 20px 15px 0px 10px;
+}
+
+
+
+.singlePostWrapper {
+
+    padding : 20px;
+    padding-right : 0px;
+}
+
+.singlePostImg{
 
     width : 100%;
-    max-width : 1024px;
+    height : 400px;
+    object-fit : cover;
+    border-radius: 5px;
+    
+    
+    
+}
+
+.singlePostTitle {
+
+    margin-left: 0px;
+    color : gray;
+    font-size : 24px;
+    font-weight : bold;
+    text-align : center;
+}
+
+.singlePostEdit {
+
+    float : right;
+    font-size : 18px;
+    
+}
+.singlePostIcon {
+
+    margin-left: 10px;
+    cursor : pointer;
+}
+.singlePostIcon:first-child {
+    color : teal;
+
+
+
+}
+.singlePostIcon:first-child {
+    color : teal;
+
+
+
+}
+.singlePostIcon:first-child {
+    color : teal;
+
+
+
+}
+.singlePostIcon:last-child {
+    color :tomato;
+
+
+
+}
+
+.singlePostInfo{
+
+    display: flex;
+    justify-content : space-between;
+    color : #b39656;
+    margin-bottom: 20px;
+}
+.singlePostDesc {
+
+    color : #666;
+    font-size : 16px;
+    line-height : 28px;
+}
+.singlePostDesc::first-letter{
+
+    margin-left: 20px;
+    font-size : 28px;
+    font-weight : bold;
+}
+.inputTitle {
     display: flex;
     flex-direction: column;
-    margin : 10px 10px 0px 150px;
-    gap : 20px;
-
-
-
-
+    width : 400px;
+    background-color: #b39656;
+    margin : 100px 30px 20px 230px;
 
 }
+input::placeholder{
 
-.singlePostImg  {
+    color : white;
+    font-size : 18px;
+}
 
-    width : 100%;
-    width : 900px;
-    height : 500px;
-    margin : 20px 30px 0px 60px;
-    
-    
+
+
+.singlePostBtn{
+
+    width : 100px;
+    padding : 10px;
+    background-color: #0071c2;
+    border-radius : 5px;
+    cursor : pointer;
+    color : white;
+    align-self: self-end;
+    margin-left: 900px;
 
 }
+.singlePostInput{
+
+       
+    border : none;
+    color : black;
+    text-align : center;
+    margin : 20px 20px 0px 350px;
+    font-size : 20px;
+
+
+    
+}
+.singlePostInput:focus{
+
+    outline : none;
+}
+.singlePostDesc{
+
+    width :  900px;
+}
+
+
+

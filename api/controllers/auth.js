@@ -1,5 +1,5 @@
 import User from "../models/User.js"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 
 
@@ -10,62 +10,65 @@ import jwt from "jsonwebtoken"
 
 export const register = async(req,res)=>{
 
+    const {username, email, password} = req.body
 
-    const {username, email, password}  = req.body
-
-    
-    try {
+   
 
 
         if (!username  || !email || !password){
 
-            return res.status(400).json("all fields are required")
+            return res.status(500).json("all fields are required")
         }
+
+        try {
+        
 
         
         const userAlreadyExists =  await User.findOne({email})
 
         if(userAlreadyExists){
 
-            return res.status(400).json("user already exists!")
+            return res.status(501).json("user already exists!")
         }
 
         const salt = await bcrypt.genSalt(10)
-        const hashedPass = await bcrypt.hash(password, salt)
-
-           
-
+        const hashedPass =  await bcrypt.hash(password, salt)
         
-    
-
+        
         const newUser  = new User({
 
-            username,
-            email,
-            hashedPass,
+            username ,
+            email  ,
+            password : hashedPass,
+            
             
             
         })
 
         const user = await newUser.save()
 
-        res.status(200).json(user)    
+        await user.save()
 
-               
+        res.status(200).json({
+
+            message : "user created successfully",
+            user : {
+                id : user._id,
+                username : user.username,
+                role : user.role
+            }
+
+
+
+
+        })   
+                     
 
     }
-
-
          
 
     catch(err){
-
-        return res.json({
-            success : false,
-            message : err.message
-        })
-
-
+        res.status(501).json({message : "error"})                    
 
     }    
 
@@ -75,6 +78,7 @@ export const login =  async(req,res)=>{
 
     const {username, password}  = req.body
 
+    
     try {
         
     const user = await User.findOne({username})
@@ -83,66 +87,144 @@ export const login =  async(req,res)=>{
     return res.json("invalid username")
 
     const match = await bcrypt.compare(password, user.password)
+    if(!match)
+
+    return res.json("invalid password")    
+
+       
+
+    const accessToken =  jwt.sign({id: user._id, role : user.role, username : user.username}, process.env.JWT_ACCESS_TOKEN, {expiresIn : "15m"})
 
     
+    
+    
 
-    const token =  jwt.sign({id: user._id}, process.env.JWT, {expiresIn : "7d"})
 
+    const refreshToken = jwt.sign({id : user._id, role : user.role}, process.env.JWT_REFRESH_TOKEN, {expiresIn : "7d"})
 
-    res.cookie("token", token, {
+    res.cookie("refreshToken", refreshToken, {
         httpOnly  : true,
-        secure : true,
+        secure : process.env.NODE_ENV === "development",
         sameSite : "strict",
-        maxAge : 7 * 24 * 8* 60 * 60 * 1000
+        maxAge : 7 * 24 * 60 * 60 * 1000
     })
-    res.json({
+    res.json({accessToken, user : {
 
-        success : true,
-        message : "user logged in successfully"
-    })
+        id : user._id,
+        username : user.username,
+        email : user.email,
+        password : user.password,        
+        role : user.role
+
+
+
+    }}
+
+        
+    )
+
+
+    
 
 
 }
 
 catch(err){
 
-    res.json({
-        success : false,
-        message : err.message
-    })
+    console.error(err)
+    return res.status(501).json(err) 
 
 
 
     
 }
 
+
+
 }
 
-export const logout =  async(req,res)=>{
+
+export const refreshToken = async(req,res)=>{
+
+    const token = req.cookies.refreshToken
+
+    if(!token){
+
+        return res.status(404).json("no token provided")
+    }
+
+    try{
+        const decoded = jwt.verify(token, process.env.JWT_REFRESH_TOKEN)
+        const user = await User.findById(decoded.id)
 
 
-          try {
-            
-          res.clearCookie("token", {
-          httpOnly : true,
-          secure : true,
-          sameSite : "strict"
+        if(!user){
+
+            return res.status(404).json("no user found")
+        }
+        
+
+        const newAccessToken = jwt.sign({id : user._id, role : user.role}, process.env.JWT_ACCESS_TOKEN, {expiresIn: "15m"})
+
+
+        res.status(200).json({
+            accessToken : newAccessToken,
+            user :{
+
+
+                id : user._id,
+                username : user.username,
+                email : user.email,
+                role : user.role,
+                
+
+
+
+            }
         })
-        return res.json ({
-        success : true,
 
-        message :  "user logged out successfully"
-,
-        })
 
     }
+
     catch(err){
-        res.json({
+        console.error("error refreshing token")
+        res.status(501).json("server error")
 
-            success : false,
-            message : err.message
 
-        })
+
+
+    }
+}
+
+export const logout = (req,res)=>{
+
+
+    try {
+
+        res.clearCookie("refreshToken",{
+
+            httpOnly : true,
+            secure : process.env.NODE_ENV === "development",
+            sameSite : "strict", 
+            maxAge : 7 * 24 * 60 * 60 * 1000
+            
+
+
+
+
+    })
+    res.status(200).json("logged out successfully!")
+
+
+
+
+    }
+
+    catch(err){
+
+        console.error("error logging out user")
+
+
 
 
     }
@@ -151,7 +233,10 @@ export const logout =  async(req,res)=>{
 
 
 
-    }
+}
+
+
+    
 
     
  // export const login = async(req, res)=>{

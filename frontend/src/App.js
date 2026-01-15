@@ -8,12 +8,24 @@ import Home from './pages/home/Home';
 import Write from './pages/write/write';
 import Users from './pages/users/users';
 import User from "./pages/user/user"
-import { useContext } from 'react';
-import { Context } from './context/Context';
+import { useEffect, useState } from 'react';
+import { Context, useAuth } from './context/Context';
 import SinglePost from './components/singlePost/singlePost';
 import Post from './components/post/post';
-import {Routes, Route } from 'react-router-dom';
+import {Routes, Route, useNavigate } from 'react-router-dom';
 import Test from './pages/file/test';
+import Navbar from './components/navbar/navbar';
+import { useAuthStore } from './store/authStore';
+import Single from './pages/single/single';
+import Sidebar from './components/sidebar/sidebar';
+import Posts from './components/posts/posts';
+import Footer from './components/footer/footer';
+import axios from "axios"
+import Admin from './pages/admin/admin';
+import Header from './components/header/header';
+import { client } from './components/lib/client';
+import NotFound from './pages/notfound/notfound';
+import { useSelector } from 'react-redux';
 
 
 
@@ -22,49 +34,82 @@ import Test from './pages/file/test';
 
 
 
+const  App = ()=>{   
 
 
+  const user = useSelector(state=>state.user)
 
-
-
-const  App = ()=>{
-
-  const {user}  = useContext(Context)
+  console.log(user)
 
   
 
 
+  
+
+
+  
+
+  
   
   
   return (
 
+
+    
+
+
+    <>
+
+    
+
+    <Navbar/>  
+
+    
+    
+    
+    
+
+
+
+  
     
         
     
     <Routes>
     
-    <Route path = "/"  element =  {<Home/>}/>
-
-    <Route path = "/test"  element =  {<Test/>}/>
     
-    <Route path = "/post/:id"  element =  {<Post/>}/>
-
-    <Route path = "/write"  element =  {<Write/>}/>
-
-    { user? (<Route path = "/write"  element =  {<Write/>}/> ):( <Route path = "/"  element =  {<Home/>}/>)}
-
-    <Route path = "/register"  element =  {<Register/>}/>
-    {user?  <Route path = "/login" element = {<Login/>} /> : <Route path = "/register" element = {<Register/>} />}    
-    
-    
-    
-    <Route path = "/login"  element =  {<Login/>}/>
-
-    { user? <Route path = "/"  element =  {<Home/>}/> : <Route path = "/login"  element =  {<Login/>}/>}
 
     
+  
+    <Route exact path = "/"  element =  {<Home/>}/>
+
+    <Route path = "/write" element =  {<Write/>}/>
+
+    <Route path = "/user" element =  {<User/>}/>
+
+    <Route path = "/register" element =  {<Register/>}/>
+
+    <Route path = "/post/:postId" element = {<SinglePost/>} /> 
+
+   <Route path = "/login"  element = {<Login/>}/> 
+
+    <Route path = "/admin"  element = {<Admin/>}/> 
+    
+
+
+       
     
     </Routes>
+
+    <Footer/>
+
+    
+
+    
+    
+</>
+
+    
 
     
 
@@ -76,3 +121,20 @@ const  App = ()=>{
 }
 
 export default App;
+
+export const getServerSideProps = async()=>{
+
+  const query = `*[_type == "pizza]`
+
+  const pizzas = await client.fetch(query)
+  return {
+    props : {
+      pizzas
+    }
+  }
+}
+
+
+
+
+

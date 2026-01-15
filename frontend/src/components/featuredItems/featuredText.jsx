@@ -1,15 +1,22 @@
 import "./featuredText.css"
 
 
-const  FeaturedText   = ()=>{
+const  FeaturedText   = ({type})=>{
 
 
 
     return (
 
-    <div className="featuredProducts">
+    <div className="featuredBlogs">
 
-    <h1 className="featureTitle">Featured products</h1>
+    
+
+    <h2 className="featureTitle"> blogs {type}</h2>
+       
+
+    <img src="/images/hat1.jpg" alt="" />
+
+
 
 
 

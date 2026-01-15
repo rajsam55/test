@@ -1,88 +1,90 @@
 
 
-const Reducer = (state, action)=>{
+// const Reducer = (state, action)=>{
 
-        switch(action.type){
+//         switch(action.type){
 
-            case "LOGIN_START" :
-                return {
+//             case "LOGIN_START" :
+//                 return {
 
-                    user : {},
-                    isFetching : true,
-                    error : false
-
-
-                }
-
-                case "LOGIN_SUCCESS" :
-                return {
-
-                    user : action.payload,
-                    isFetching : false,
-                    error : false
+//                     user : null,
+//                     isFetching : true,
+//                     isAuthenticated : false,
+//                     error : false
 
 
-                }
+//                 }
 
-                case "LOGIN_FAILURE" :
-                return {
+//                 case "LOGIN_SUCCESS" :
+//                 return {
 
-                    user : null,
-                    isFetching : false,
-                    error : true
-
-
-                }
+//                     user : action.payload,
+//                     isFetching : false,
+//                     isAuthenticated : true,
+//                     error : false
 
 
-                case "LOGOUT" :
-                return {
+//                 }
 
-                    user : null,
-                    isFetching : false,
-                    error : false
+//                 case "LOGIN_FAILURE" :
+//                 return {
+
+//                     user : null,
+//                     isFetching : false,
+//                     error : true
 
 
-                }
+//                 }
 
-                case "UPDATE_START" :
 
-                return  {
+//                 case "LOGOUT" :
+//                 return {
 
-                    ...state,
-                    isFetching  : true
-                }
+//                     user : null,
+//                     isFetching : false,
+//                     error : false
 
-                case "UPDATE_SUCCESS"  :
 
-                return  {
+//                 }
 
-                    user : action.payload,
-                    isFetching  : false,
-                    error : false
-                }
+//                 case "UPDATE_START" :
 
-                case "UPDATE_FAILURE"   : 
+//                 return  {
 
-                return  {
+//                     ...state,
+//                     isFetching  : true
+//                 }
 
-                    user : state.user,
-                    isFetching : false,
-                    error : true
-                }
+//                 case "UPDATE_SUCCESS"  :
 
-                default : 
+//                 return  {
+
+//                     user : action.payload,
+//                     isFetching  : false,
+//                     error : false
+//                 }
+
+//                 case "UPDATE_FAILURE"   : 
+
+//                 return  {
+
+//                     user : state.user,
+//                     isFetching : false,
+//                     error : true
+//                 }
+
+//                 default : 
                 
-                return state
+//                 return state
             
-        }
+//         }
 
     
 
 
-    }
+//     }
 
-    export default Reducer
+//     export default Reducer
 
 
 

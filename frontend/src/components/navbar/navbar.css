@@ -1,34 +1,35 @@
 .navbar {
 
+    width : 100%;
+    
+    
+
+}
+
+.navbarContainer {
+
     
     width : 100%;
-    max-width : 1024;
-    height : 100px;
-    background-color: #0071c2;
-    
-    
-    
-}
-.navbarContainer  {
-
-    display : flex;
+    height : 70px;
+    display: flex;
     justify-content: space-between;
-    align-items : center;
-    margin : 0px 20px 0px 20px;
-    gap : 10px;
+    background-color: #0071c2;
+    margin-top: 5px;
     
-    
-    
+
+
+
 }
+
 .navBarSearch {
 
-    width : 100%;
-    max-width : 600px;
-    border : 1px solid black;
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid black;
     border-radius: 15px;
-    padding : 3px;
-    display : flex;
-    align-items : center;
+    padding: 3px;
+    display: flex;
+    align-items: center;
     margin-top: 20px;
 }
 
@@ -36,79 +37,127 @@
 
 .navbarItems {
 
-    
-    display : flex;
-    gap : 10px;
-    
-}
-.btnItems {
 
+    display: flex;
+    gap: 10px;
+
+}
+
+.btn {
+
+
+    width: 6.2rem;
+    padding: 0.6rem;
+    background-color: #1692ea;
     border-radius: 5px;
-    border : none;
-    color : blueviolet;
-    padding : 5px;
-    background-color: white;
-    cursor : pointer;
-}
-.logoItems{
+    border: none;
+    color: white;
+    cursor: pointer;
 
-    
+
+
+
+}
+
+.logoItems {
+
+
     display: flex;
     align-items: center;
-    
-    
+
+
 
 }
+
 .navBarSearchInput {
 
-    width : 565px;
-    border : none;
-    padding : 15px;
-    border-radius  : 15px;
-    align-items :center;
+    width: 565px;
+    border: none;
+    padding: 15px;
+    border-radius: 15px;
+    align-items: center;
 
 
 }
+
 .navSearchImg {
 
-    
-    color : pink;
-    margin : 5px;
-    cursor  : pointer;
+
+    color: pink;
+    margin: 5px;
+    cursor: pointer;
     background-color: gray;
-    
+
 }
+
 .navBarSearchInput>img {
 
     background-color: yellow;
-    color : red;
+    color: red;
 }
+
 .logoTitle {
 
-    color : white;
-    border : none;
-    margin : 0px 0px 0px 10px;
+    color: white;
+    border: none;
+    margin: 0px 0px 0px 10px;
+    font-size: 15px;
 }
+
 .link {
 
-    border : none;
-    text-decoration: none;;
+    border: none;
+    text-decoration: none;
+    ;
 }
 
 .handleBtn {
 
     background-color: #0071c2;
-    
-    color : white;
+
+    color: white;
 }
 
 .logOutBtn {
 
+    color: white;
+    border: none;
+    padding : 0.5rem;
+    width: 80px;
+    background-color: #1692ea;
+    margin-top: 12px;
+    margin-right: 10px;    
+    cursor: pointer;
+    font-size: 15px;
+    border-radius : 5px;
+
+}
+.logOutBtn:hover{
+
+    transform : scale(1.1);
+}
+
+.rightItems {
+
+    display: flex;
+    margin: 15px 10px 0px 0px;
+
+    gap: 10px;
+    align-items: center;
+
+}
+
+.logout {
+
+    margin: 15px 10px 0px 0px;
+    align-items: center;
     color : white;
-    border : none;
-    padding : 10px;
-    width : 70px;
-    background-color: #0071c2;
-    margin-top: 10px;
-    cursor : disabled;
+    cursor : pointer;
+}
+
+.navMid {
+
+    display: flex;
+    margin: 15px 0px 0px 0px;
+    gap: 10px;
 }

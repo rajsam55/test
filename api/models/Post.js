@@ -1,42 +1,58 @@
 import mongoose from "mongoose"
 
 
-const schema  =  mongoose.Schema()
 
 
-const  postSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
 
 
     title : {
 
         type : String,
-        required : true
-    },
+        
+                
+        
+    
+         
 
+    },
+    
 
     
-    desc  : {
 
-        type  : String,
-        required : true
-    },
-    photo : {
+    desc : {
 
-        type : String,
+        type : String,      
         
     },
+
+    image : {
+
+
+        
+        type : Object,
+        required : true
+
+    },
+    
+       
+
+    
+    categories : {
+
+        type : Array,
+        required : false
+
+
+    },
+    
     author : {
 
         type : String
-    }
-    
+    },
+
 
 
 }, {timestamps : true})
 
 export default mongoose.model("Post", postSchema)
-
-
-
-
-

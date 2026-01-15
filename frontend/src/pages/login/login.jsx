@@ -1,9 +1,13 @@
-import {useRef, useContext, useState} from "react"
+import {useState, useEffect} from "react"
 import axios from "axios"
 import "./login.css"
-import Navbar from "../../components/navbar/navbar"
-import {useNavigate}  from "react-router-dom"
-import { Context } from "../../context/Context"
+import {Link, useNavigate}  from "react-router-dom"
+import { useAuth } from "../../context/Context.js"
+import { useDispatch, useSelector } from "react-redux"
+import { handleLogin } from "../../store/reducers/userSlice.js"
+
+
+
 
 
 
@@ -17,23 +21,21 @@ import { Context } from "../../context/Context"
 const Login  =  ()=>{
 
     
-    const [username, setUsername] = useState("")
-    const [password, setPassword]= useState("")  
-    const[isLoading,setIsLoading]  = useState(false)
-    
-    const [error, setError] = useState(false)
-
-    const {dispatch, user}   = useContext(Context)
 
     
 
-    const navigate = useNavigate()
+    const user = useSelector((state)=>state.user)
 
+     const dispatch = useDispatch()
+
+    const [formData, setFormData] = useState(user)
+    
+    const [error, setError] = useState(false)   
 
     
+
     
-    
-    
+   const navigate = useNavigate()    
 
    
 
@@ -41,104 +43,94 @@ const Login  =  ()=>{
 
 
         e.preventDefault()
-        setError("")
-        
-        setIsLoading(true)
-
-
-
-        try {                     
-        
 
         
 
-        const res = await axios.post("http://localhost:6500/api/auth/login/", {username, password})
+        try{
 
+            const res = await axios.post("http://localhost:6500/api/auth/login", formData)
 
+            setFormData(res.data)
             
 
-        
+            dispatch(handleLogin(formData))
 
-        
-        
+            
+            
+            
+            
+            
+            navigate("/")
+            
 
-        
-        
-        dispatch({type:"LOGIN_SUCCES", payload : res.data})
-
-        res.data && window.location.replace("/")
-
-        console.log(user)
-
+            
                
-      }
-        
-        catch(error){
-            setError(true) 
-            dispatch({type : "LOGIN_FAILURE"})        
-
 
 
         }
+
+        
+
+
+        catch(err){
+
+            setError("error login")          
+            
+
+
+        }
+
+        
         
         
     }
+
+    
 
      
     
     return(
         <>
 
-        <Navbar/>
-
-
         
+       
 
         <div className="login">
 
 
 
-        <div className="">
+        
         
         <form type = "submit" className="formLogin" onSubmit = {handleSubmit}>
 
 
-        <h1 className="">Login</h1>
+        <h1 className="">Welcome to Etsy!</h1>
+        <h2 className="">Log in to your account</h2>
 
         
 
         
-
+        <label  className="">username</label>
         <input
         type="text" 
-        name = "username"
-        
         className="inputForm" 
-        placeholder = "username"
         minLength = {3}
         maxLength  = {20}
-
-        onChange = {(e)=>setUsername(e.target.value)}
+        onChange = {(e)=>setFormData({...formData, username :e.target.value})} 
         
-
-       
-
-       
-
-        
-
-        
+        required
         
         />
+
+        <label  className="">password</label>
         
         <input
         
-        type = "text"
-        name = "password"
+        type = "password"
+        className="inputForm"         
+        onChange = {(e)=>setFormData({...formData, password :e.target.value})}
+        required
         
-        className="inputForm" 
-        placeholder = "password"
-        onChange = {(e)=>setPassword(e.target.value)}
         
   
         
@@ -147,16 +139,46 @@ const Login  =  ()=>{
         
         
         />
-
-
-        
+     
              
         
         
         
         
 
-        <button  className = "formBtn" type = "submit">Login</button>
+        <button 
+
+        
+
+        className = "formBtn" type = "submit">
+
+            login
+
+        
+        
+        </button>
+
+        <p className="">
+            
+            
+            Don't Have An Account ?<br/>
+
+            <Link to  = "/register" ><button className="btmBtnx">
+
+            Register
+                
+                
+            </button></Link>
+
+
+            {error && <span className="">{error}</span>}
+
+
+
+
+
+        </p>
+
 
         
 
@@ -173,7 +195,7 @@ const Login  =  ()=>{
         
 
         </div> 
-        </div>
+        
 
         
       
@@ -185,6 +207,9 @@ const Login  =  ()=>{
 }
 
 export default Login
+
+
+
 
 
 

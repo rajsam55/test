@@ -1,7 +1,15 @@
+.users{
+
+    margin-top: 100px;
+}
+
+
 .usersDtls {
+    
 
     background-color: #0071c2;
     color : white;
+    gap : 10px;
 
 
 

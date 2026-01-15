@@ -1,51 +1,62 @@
 
-import {createContext, useReducer, useEffect} from "react"
+import {createContext, useEffect, useReducer, useState} from "react"
+import {useContext} from "react"
 
-import Reducer from "./Reducer.js"
-
-
-const INITIAL_STATE =  {
-
-    user : {},
-    isFetching : false,
-    error  :  false
-}
-
-
-
-export const Context = createContext()
+import axios from "axios"
+import Reducer from "./Reducer"
 
 
 
 
 
-export const ContextProvider = ({children})=>{
+
+
+
+export const AuthContext = createContext()
+
+
+
+
+
+export const AuthProvider = ({children})=>{
 
     
-    const [ state, dispatch, ] = useReducer(Reducer, INITIAL_STATE)
-    
-    
+    const [accessToken, setAccessToken, user]  = useState(localStorage.getItem("user"))
+
+    const [loading, setLoading] = useState(true)
+
+
+
     useEffect(()=>{
 
-        localStorage.setItem("myUser", JSON.stringify(state.user))
 
-       
+        if(accessToken){
 
-
-        },[state.user])
+            localStorage.setItem("user", JSON.stringify(accessToken))
 
 
-      
+        }else{
+
+
+            localStorage.removeItem("user")        
+        
+        }       
+
+
+        
+            
+    },[accessToken])
+
+           
 
             
 
     return(
 
-        <Context.Provider
+        <AuthContext.Provider
 
-        value ={{user :state.user, dispatch}}
+        value =  {{accessToken, setAccessToken, user}}
 
-            
         
         
         >
@@ -55,9 +66,7 @@ export const ContextProvider = ({children})=>{
 
 
 
-
-
-        </Context.Provider>
+        </AuthContext.Provider>
 
 
 
@@ -67,9 +76,9 @@ export const ContextProvider = ({children})=>{
 
 
 
-
-
 }
+
+export const useAuth = ()=> useContext(AuthContext)
 
 
 

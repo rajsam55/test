@@ -1,5 +1,27 @@
 .write  {
 
+    
+    
+    display: flex;
+    flex-direction: column;
+
+    
+ 
+}
+
+.writeFormGroup>img{
+
+
+    display: flex;
+    justify-content: center;
+    width : 27rem;
+    padding : 1.7rem;
+    height : 300px;
+    top : -rem;
+    align-items : center;
+    flex-direction: column;
+
+
 
 
 }
@@ -11,24 +33,29 @@
     display: flex;
     flex-direction: column;
     margin : 20px 20px 0px 380px;
-    gap : 20px;
-}
-
-.formInput  {
-
-    width : 500px;
-    padding : 10px;
-    background-color:#0071c2;
-    border-radius: 10px;
-    font-size: 15px;
     
 }
+
+.formInputs  {
+
+    width : 500px;
+    background-color: #0071c2;
+    padding : 10px;
+    margin-top: 20px;    
+    border-radius: 10px;
+    font-size: 16px;
+    gap : 5px;
+    
+}
+
+
 
 
 .publishBtn  {
 
     width : 520px;
-    padding : 15px;
+    margin  : 10px 0px 10px 0px;
+    padding : 10px;
     background-color: #0071c2;
     border-radius: 10px;
     color : white;
@@ -37,6 +64,7 @@
 
 input::placeholder{
     color : white;
+    font-size: 10px;
 }
 textarea::placeholder{
 
@@ -52,7 +80,7 @@ textarea{
 
 .writeBlogTitle  {
 
-    margin-top: 100px;
+    margin : 100px 20px 0px 100px;
     color : #0071c2;
     
 }

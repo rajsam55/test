@@ -9,98 +9,49 @@ import Navbar from "../navbar/navbar"
 
 
 
-const Posts = ({Posts})=>{
-
-
-
+const Posts = ({posts})=>{    
     
-    const [posts, setPosts]  = useState([])
-
-    useEffect(()=>{
-
-
-
-        const getPosts  = async()=>{
-
-    try {
-        
-        
-        const res = await axios.get("http://localhost:6500/api/posts")
-        setPosts(res.data)
-
-        }
-
-    catch(err){
-
-
-    }
-
-    }
-    getPosts()
-
-
-
-
-
-
-
-    },[])
-
-    
-   
-
-    
-
-
 
 
     return(
 
-        <div className="posts">
-
-            <Navbar/>
+        
 
         
-        <div className="singlePost">
+
+       <div className="posts">
 
         
-        <h1 className="postTitle">My Posts</h1>
+       {posts.map(item=>(
 
         <div className="">
-               
 
-        {  posts.map(post=>(
-
-
-            <div className = "postsDtls" key = {post.id}>
-
-            <Link to =  {`/post/${post._id}`}><span className="">{post.title}</span></Link>
-            <span className="">{post.desc}</span>
-
-            
-
-            
+        <Post  post = {item}  key =  {item.id}/>
 
 
 
-
-
-            </div>
-
-))}
 
 
         </div>
 
 
+
+
+
+       ))}
+
+
+
+
+
+
+
+
+       
+
+        </div>     
         
-            
-            
-        </div>
-        </div>
-        
-  
-        
+              
 
         
 

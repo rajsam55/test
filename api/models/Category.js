@@ -2,21 +2,23 @@ import mongoose from "mongoose"
 
 
 
-const schema = mongoose.Schema()
-
 
 const categorySchema = new mongoose.Schema({
 
 
-    catName :  {
+    music : {
 
-        type : String,
-        required : true
-    } 
+        type : String
+
+    },
+
+    
+
+    
 
 
 
 
-})
+}, {timestamps : true})
 
 export default mongoose.model("Category", categorySchema)
