@@ -7,7 +7,7 @@ const Reducer = (state, action)=>{
             case "LOGIN_START" :
                 return {
 
-                    user :  {},
+                    user : {},
                     isFetching : true,
                     error : false
 

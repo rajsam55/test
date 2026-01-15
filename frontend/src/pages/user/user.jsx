@@ -1,7 +1,10 @@
 import "./user.css"
 import {useState, useEffect}  from "react"
+import {useLocation} from "react-router-dom"
 import axios from "axios"
-import { useLocation } from "react-router-dom"
+import Navbar from "../../components/navbar/navbar"
+
+
 
 
 
@@ -16,11 +19,16 @@ import { useLocation } from "react-router-dom"
 
 const User = ()=>{
 
-    const [user, setUser]  = useState("")
+    
+
+
+    const [user, setUser] = useState({})
     const [username, setUsername] = useState("")
     const [password, setPassword]  = useState("")
     const [email, setEmail]  = useState("")
+    const location = useLocation()
 
+    const path = location.pathname.split("/")[2]
 
     
 
@@ -35,10 +43,10 @@ const User = ()=>{
 
             try{
 
-            const res = await axios.get("http://localhost:6600/api/users/user._id")
+            const res = await axios.get("http://localhost:6500/api/users" + path)
 
             setUser(res.data)
-            console.log(res.data)
+            console.log(res)
             setUsername(res.data.username)
             setEmail(res.data.email)
             setPassword(res.data.password)
@@ -57,7 +65,7 @@ const User = ()=>{
         getUser()
 
 
-    })
+    },[path])
 
 
 
@@ -65,13 +73,27 @@ const User = ()=>{
 
 
 
-    return(
+return(
+
+        
+
+<>
+
+
+  
+
+
 
    <div className="">
 
-    <div className="">
+    
+    
 
-        <span className="spanText">{username}</span>
+    
+
+    <div className="spanText">
+
+        <span className="">{username}</span>
         <span className="">{email}</span>
         <span className="">{password}</span>
 
@@ -88,6 +110,9 @@ const User = ()=>{
 
 
     </div>
+
+    </>
+    
 
     )
 }

@@ -24,10 +24,10 @@ const Register = ()=>{
 
         try  {
 
-            const res = await axios.post("http://localhost:6600/api/auth/register",  username, email, password)
+            const res = await axios.post("http://localhost:6500/api/auth/register",  {username, email, password})
             
             res.data && window.location.replace("/login")
-            console.log(res.data)
+        
 
 
         }

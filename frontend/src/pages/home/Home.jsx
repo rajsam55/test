@@ -9,8 +9,12 @@ import "./home.css"
 
 import Users from "../users/users"
 import Write from "../write/write"
-import Post from "../../components/post/post"
+
 import Posts from "../../components/posts/posts"
+import UseFetch from "../../components/hooks/useFetch"
+import User from "../user/user"
+import { useContext } from "react"
+import { Context } from "../../context/Context"
 
 
 
@@ -19,29 +23,24 @@ import Posts from "../../components/posts/posts"
 
 const Home = ({posts})=>{
 
+    const {user}  =  useContext(Context)
+
+    
+
+    
+
     
 
     return(
 
     <div className="">
 
-    <Navbar />
-    <Header/>
-
-    
-    <Posts />
-    
-    
-    
-
-
     
 
     
+    <Posts posts = {posts}/>
 
-    
-
-    
+       
     
 
             

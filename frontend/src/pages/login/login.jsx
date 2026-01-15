@@ -52,7 +52,8 @@ const Login  =  ()=>{
 
         
 
-        const res = await axios.post("http://localhost:6600/api/auth/login/", {username, password})
+        const res = await axios.post("http://localhost:6500/api/auth/login/", {username, password})
+
 
             
 
@@ -62,11 +63,12 @@ const Login  =  ()=>{
         
 
         
-        console.log(res)
-
+        
         dispatch({type:"LOGIN_SUCCES", payload : res.data})
 
         res.data && window.location.replace("/")
+
+        console.log(user)
 
                
       }

@@ -5,120 +5,144 @@ import jwt from "jsonwebtoken"
 
 
 
-export const register = async (req,res)=>{
-
-
-    
-    const salt = await bcrypt.genSalt(10)
-    const hashedPass = await bcrypt.hash(req.body.password, salt)
-
-    
 
 
 
-    try  {    
+export const register = async(req,res)=>{
+
+
+    const {username, email, password}  = req.body
 
     
+    try {
 
-    const newUser = new User({
 
-            username  : req.body.username,
-            email : req.body.email,
-            password  : hashedPass,
-            
-            
-    
-       })
+        if (!username  || !email || !password){
 
-    
+            return res.status(400).json("all fields are required")
+        }
+
         
+        const userAlreadyExists =  await User.findOne({email})
+
+        if(userAlreadyExists){
+
+            return res.status(400).json("user already exists!")
+        }
+
+        const salt = await bcrypt.genSalt(10)
+        const hashedPass = await bcrypt.hash(password, salt)
+
+           
+
+        
+    
+
+        const newUser  = new User({
+
+            username,
+            email,
+            hashedPass,
+            
+            
+        })
+
         const user = await newUser.save()
 
-        res.status(200).json(user)
+        res.status(200).json(user)    
 
+               
 
     }
 
+
+         
 
     catch(err){
 
-        res.status(404).json(err)
+        return res.json({
+            success : false,
+            message : err.message
+        })
 
 
 
-    }
-
-    
+    }    
 
 }
 
-export const login = async(req,res)=>{
+export const login =  async(req,res)=>{
 
+    const {username, password}  = req.body
+
+    try {
+        
+    const user = await User.findOne({username})
+
+    if(!user)
+    return res.json("invalid username")
+
+    const match = await bcrypt.compare(password, user.password)
 
     
 
+    const token =  jwt.sign({id: user._id}, process.env.JWT, {expiresIn : "7d"})
 
 
-    try {
+    res.cookie("token", token, {
+        httpOnly  : true,
+        secure : true,
+        sameSite : "strict",
+        maxAge : 7 * 24 * 8* 60 * 60 * 1000
+    })
+    res.json({
 
-    const user =  await User.findOne({username : req.body.username})
-    if(!user)  return res.status(401).json("wrong credentials")
-
-    const match  = await bcrypt.compare(req.body.password, user.password)
-
-    if(!match) return  res.status(401).json("wrong credentials")
-
-    res.status(200).json("logged in successfully")
-
-
-    const token =  jwt.sign({"userInfo" : {
-
-
-        "username" : user.username,
-        "roles"   : user.roles
-
-
-    }}, process.env.JWT,{expiresIn : age})
-
-
-    const {password : userPassword,  ...userInfo}  =  user._doc
-
-
-    const age = 1000 * 60 * 60 * 24 * 7
-
-
-    res.cookie("token", token ,{
-
-        httpOnly : true,
-        secure  : true,
-        sameSite : none,
-        maxAge : age,
-        
+        success : true,
+        message : "user logged in successfully"
     })
 
-    .status(200).json({userInfo})
+
+}
+
+catch(err){
+
+    res.json({
+        success : false,
+        message : err.message
+    })
+
+
+
+    
+}
+
+}
+
+export const logout =  async(req,res)=>{
+
+
+          try {
+            
+          res.clearCookie("token", {
+          httpOnly : true,
+          secure : true,
+          sameSite : "strict"
+        })
+        return res.json ({
+        success : true,
+
+        message :  "user logged out successfully"
+,
+        })
 
     }
-
     catch(err){
+        res.json({
 
+            success : false,
+            message : err.message
 
-        res.status(404).json("unable to login")
-    }
-
-
-
-    }
-
-    export const logout =  ()=>{
-
-
-        if(!cookies?.jwt) return res.senStatus(204)
-
-            res.clearCookie("jwt", {httpOnly : true, secure : true}).json("logout successful")
-
-
-
+        })
 
 
     }
@@ -127,6 +151,9 @@ export const login = async(req,res)=>{
 
 
 
+    }
+
+    
  // export const login = async(req, res)=>{
 
 //     const {username, password}  = req.body

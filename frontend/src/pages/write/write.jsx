@@ -1,10 +1,11 @@
 import "./write.css"
 import {useState, useContext} from "react"
+import {useLocation, useNavigate}  from "react-router-dom"
 import axios from "axios"
 import { Context } from "../../context/Context"
 import Navbar from "../../components/navbar/navbar"
 import Header from "../../components/header/header"
-import "core-js/stable"
+
 
 
 
@@ -13,65 +14,90 @@ import "core-js/stable"
 
 const Write = ()=>{
 
-    const [file,setFile]  = useState()
+    const [file, setFile]  = useState(null)
     const [title,setTitle] = useState("")
     const [desc, setDesc]  = useState("")
     const {user}  = useContext(Context)
+    
+
+    
 
 
-    const handleSubmit = async (e)=>{
-        e.prevent.default()
 
-        const newPost =  {
+        const handleSubmit = async()=>{
 
-            user : user.username,
-            title,
-            desc
-            
+            const newPost =  {
 
-        }
 
+                username : user.username,
+                title, desc
+            }
         if(file){
 
-            const data = FormData()
-            const fileName =  Date.now() + file.name
 
 
-            data.append("name", fileName)
+            const data = new FormData()
+            const filename = Date.now()  + file.filename          
+
+
+        
             data.append("file",file)
-            newPost.photo = fileName
+            data.append("name", filename)
+            newPost.photo = filename
+
 
 
             try{
 
-                await axios.post("http://localhost:6600/api/upload", data)
+                await axios.post("http://localhost:6500/api/upload", data)
+
+                
+                console.log(data)
+
+
 
             }
             catch(err){
 
-                
+
 
 
             }
+
+
+            
+        }              
+
+            
+
+            try  {
+
+
+                const res = await axios.post("http://localhost:6500/api/upload", newPost)
+
+                window.location.replace("/")
+
+
+
+
+            }
+
+            catch(err){
+
+
+
+
+            }           
+
+
+                       
         }
 
-        try {
 
-            const res = await axios.post("http://localhost:6600/api/posts", newPost)
-            window.location.replace("/post" + res.data._id)
+        
 
-        }
-        catch(err){
-
-
-
-
-        }
-
-
-
-    }
-
+          
+    
 
     return(
 
@@ -84,13 +110,15 @@ const Write = ()=>{
 
         <h1 className="writeBlogTitle">Write New Blog</h1>
 
-        { file && <img src= {URL.createObjectUrl} alt="" className="" />}
+        { file && <img src= {URL.createObjectURL(file)} alt="" className="" width = {700} height = {500} />}
 
         <div className="writeFormGroup">
 
-        <form action="" className="writeForm" onSubmit = {handleSubmit}>
 
 
+        <form action="" className="formInput"  onSubmit =  {handleSubmit}>
+
+        
 
         <label htmlFor="fileInput" className="">
 
@@ -105,58 +133,53 @@ const Write = ()=>{
         <input 
         
         
-        type="file" className="" 
+        type = "file" className="formInput" 
 
-        id = "fileInput"
         
+
+                
 
         onChange = {(e)=>setFile(e.target.files[0])}
+
+        
         
         
         />
 
-        <input 
-
-        type="text" className="formInput" 
-
-        placeholder = "title"
-
-        
+        <input type="text" className="formInput" 
 
         onChange = {(e)=>setTitle(e.target.value)}
-
-
-
+        placeholder =  "title"
+        
+        
+        
+        
         
         />
-        <textarea 
-        name="" id="" className="formInput"
 
-        placeholder = "write your blog here"
 
-        type = "text"
+        <input type="text" className="formInput" 
+
         onChange = {(e)=>setDesc(e.target.value)}
+        placeholder =  "desc"
         
         
         
         
         
-        >
-        
+        />
 
         
 
-
-
-
-
-
-        </textarea>
+        
 
 
         <button type = "submit" className="publishBtn">Publish</button>
 
+
         </form>
+
+        
 
         </div>
 

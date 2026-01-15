@@ -10,18 +10,20 @@ const userSchema = new mongoose.Schema({
     username : {
 
         type : String,
-        required : true
+        required  : true
+        
+        
+        
 
     }
 
-        ,
+    ,
 
     email : {
 
         type : String,
         required : true
-
-
+        
     }
     ,
 
@@ -29,30 +31,29 @@ const userSchema = new mongoose.Schema({
 
 
         type : String,
-        required : true,
-        unique  : true
+        required : true
         
-
+        
+        
+                
+        
+        
     }
     ,
 
     
-
-    isAdmin : {
-
-
-        type : Boolean,
-        default : false
-
-
-
-
-    }
-    
     
 
+    photo  :  {
 
-      
+        type  : String,
+        
+
+
+    },
+
+            
+          
 
 
 }

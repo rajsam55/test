@@ -1,276 +1,225 @@
-import Navbar from "../navbar/navbar"
-import Header from "../header/header"
 import "./post.css"
-import {useState, useEffect, useContext} from  "react"
-
-import {Link, useLocation, useNavigate} from "react-router-dom"
+import {Link}  from "react-router-dom"
+import {useState, useEffect, useContext}  from "react"
 import axios from "axios"
+
+import {useLocation}  from "react-router-dom"
 import { Context } from "../../context/Context"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare , faTrash} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons"
+import Navbar from "../navbar/navbar"
 
 
 
+const Post =  ()=>{
 
 
-
-
-
-
-
-
-const Post  = ()=>{
-
-    
-    const {user}  = useContext(Context)
-    const [post, setPost]  = useState({})
+    const [post,setPost]  = useState({})
     const [title, setTitle]  = useState("")
     const [desc, setDesc]  = useState("")
-    const [author, setAuthor]  = useState("")
+    const [updateMode, setUpdateMode]  = useState(false)
+    const [error, setError] =  useState(false)
 
-    const [updatePost, setUpdatePost] = useState(false)
-    
-    const navigate = useNavigate()
+    const {user}   = useContext(Context)
     const location = useLocation()
-    console.log(location)
+
+    console.log(user.username)
+
+    
 
     const path = location.pathname.split("/")[2]
 
 
 
-    
+    useEffect(()=>{
 
-        
+        const getPost  = async()=>{
 
-        useEffect(()=>{
+            try{
 
-        
-    
-
-
-        const getPost =  async()=>{
-
-        
-
-        try{
-
-        const res = await axios.get("http://localhost:6600/api/posts/" + path)
+            const res =  await axios.get("http://localhost:6500/api/posts/"  + path)
 
             setPost(res.data)
             setTitle(res.data.title)
             setDesc(res.data.desc)
-            setAuthor(res.data.author)
-            
 
+            }
+
+            catch(err){
+
+
+            }
 
 
         }
-        catch(err){
-        
-        }
 
-
-
-    }
-    getPost()
-            
-    
-
-
+        getPost()
 
     },[path])
 
 
-    const handleDelete = async()=>{
+    const handleUpdate =  async()=>{
 
 
-        try  {
+        try{
+
+
+            await axios.put(`http://localhost:6500/api/posts/${post._id}`,  title, desc)
+
             
-            
-        await axios.delete(`http://localhost:6600/api/posts/${post._id}`, {data : {username : user.username}})
 
-        window.location.replace("/")
+            setUpdateMode(false)
 
+
+
+        }
+
+        catch(err){
+
+
+
+
+        }
+
+    }
+
+
+    const handleDelete =  async()=>{
+
+        try {
+
+            await axios.delete(`http://localhost:6500/api/posts/${post._id}`, {data : {username : user.username}})
+            window.location.replace("/")
+
+
+
+        }
+
+        catch(err){
+        }
 
 
 
 
     }
-    catch(err){
+    
 
-        {}
+    
 
-
-
-    }
-
-}
-
-const handleUpdate = async()=>{
-
-    try  {
-
-
-        await axios.put(`http://localhost:6600/api/posts/${post._id}`,
+    
 
 
 
-            {username : user.username}, title, desc
+    return(
 
-
-        )
-
-        setUpdatePost(false)
-        window.location.replace("/")
-        
-
-
-
-
-    }
-
-    catch(err){
-
-
-
-    }
-
-
-
-
-
-}
-   
-
-    return  (
         <>
-        
+
+
         <Navbar/>
 
-        <div className="post">
-
-        <div className="postDtls">
-
-
-        
-
-        
-
-        {updatePost ? (<input type="text" className="inputItems"
-
-        onChange = {(e)=>setTitle(e.target.value)}
-        value =  {title}
-        
-        
-        
-        />)
-
-
-
-        :
-       ( 
-              
-        
-        
-        
-        
-        <h2 className="">
-
-        {title}
-
-
-        { post.username === user?.username &&
 
         <div className="">
 
-        <FontAwesomeIcon  icon = {faPenToSquare}  onClick = {()=>setUpdatePost(true)} />
-        <FontAwesomeIcon  icon = {faTrash}  onClick = {handleDelete} />
+        <h1 className="">Post</h1>
 
-
-        </div>
-
-
-        }
-
+        <form action="" className=""  onSubmit =  {handleUpdate}>
         
+                { updateMode ? (
+                    
+                <div className="">
         
-
-
-        </h2>
+                <input type="text" className="inputText" 
         
-
-        )
-
-
-
-        }
-
-        <div className="">
-
-            <span className="">
-
-            <Link  to = {`/user?= ${post.username}`}> {post.username}</Link>
-
-            Author  : {post.author}
-
-            </span>
-
-        </div>
-
-
-        {updatePost ? ( <textarea name="" id="" className="textArea"
-
-        value = {desc}
-
-        onChange = {(e)=>setDesc(e.target.value)}        
+                onChange =  {(e)=>setTitle(e.target.value)}
         
-        
-        
-        >
-
-        </textarea>
-
-        )  
-        :   
-
-
-           ( 
-            
-            <p className="">{desc}</p>    
-
-            )}
-
-
-
-            {updatePost && 
-
-            <button className="updateBtn"  onclick  =  {handleUpdate}>
+                placeholder  = "title"
+                value = {title}
                 
                 
-            Update
-            
-            
-            
-            </button>         
-            
-            
-            
-            
-            }
+                />
         
-        </div>
+                           
+                    
+                </div>)
+        
+                : (
+        
+                    <div className="">
+        
+                      <h2 className="">{title}</h2>
+        
+        
+                    {post.username === user?.username &&
+                    <h2 className="">
+        
+                    <FontAwesomeIcon icon = {faPenToSquare} onClick = {()=>setUpdateMode(true)} />
+        
+                    <FontAwesomeIcon icon = {faTrash} onClick = {handleDelete} />
+                    
+                    
+                    
+        
+                    </h2>}
+        
+                    </div>
+        
+                )}
+        
+                {updateMode? (
+        
+                <textarea
+        
+                type="text" className="inputText"
+        
+                onChange =  {(e)=>setDesc(e.target.value)}
+        
+                placeholder =  "desc"
+                value  = {desc}   >  
+                       
+                
+                </textarea>
+        
+                )
+        
+                :
+                (
+        
+                    <h2 className="">
+
+                    {desc}
+                    </h2>
+        
+        
+        
+        
+                )
+                }
+        
+        
+        
+        
+        
+                {updateMode && <button className="" type = "submit">Update</button>}
+        
+        
+        
+        
+        
+                </form>
+        
+                  
+                    
+        
+
+
+
+
+
+
         </div>
 
         </>
-
     )
-    
-
-      
-
-
-
-    
 }
 
 export default Post

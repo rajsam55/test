@@ -1,6 +1,6 @@
 import express from "express"
 
-import {createPost, updatePost, deletePost, getPost, getPosts} from "../controllers/post.js"
+import {createPost, updatePost, getPost, deletePost, getPosts} from "../controllers/post.js"
 
 
 

@@ -1,12 +1,12 @@
 
-import {createContext, useReducer, useEffect, useState} from "react"
+import {createContext, useReducer, useEffect} from "react"
 
 import Reducer from "./Reducer.js"
 
 
 const INITIAL_STATE =  {
 
-    user : JSON.parse(localStorage.getItem("myUser")||null),
+    user : {},
     isFetching : false,
     error  :  false
 }
@@ -27,23 +27,15 @@ export const ContextProvider = ({children})=>{
     
     useEffect(()=>{
 
-        localStorage.setItem("myUser", JSON.stringify(state))
+        localStorage.setItem("myUser", JSON.stringify(state.user))
+
+       
 
 
+        },[state.user])
 
 
-    
-
-
-
-        
-
-
-        },[state])
-
-
-    
-   
+      
 
             
 

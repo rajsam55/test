@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 
-const schema  =  mongoose.Schema({})
+const schema  =  mongoose.Schema()
 
 
 const  postSchema = new mongoose.Schema({
@@ -23,7 +23,7 @@ const  postSchema = new mongoose.Schema({
     photo : {
 
         type : String,
-        required : true
+        
     },
     author : {
 

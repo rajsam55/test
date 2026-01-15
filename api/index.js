@@ -1,23 +1,24 @@
 import mongoose from "mongoose"
 import express from "express"
 import cors from "cors"
-
-
+import multer from "multer"
 import {config} from "dotenv"
 import authRouter from "./routes/auth.js"
 import userRouter from "./routes/users.js"
 import categoryRouter from "./routes/category.js"
 import postRouter from "./routes/posts.js"
+import path from "path"
 
 
 
 
 
 
+config()
 
 const app = express()
 
-config()
+
 
 
 
@@ -57,6 +58,45 @@ mongoose.connection.on("connected", ()=>{
 })
 
 
+
+
+const storage =  multer.diskStorage({
+
+
+    destination :  function (req,file, cb){
+
+        cb(null, "images")
+
+
+    },
+
+    filename   : function(req, file, cb){
+
+        cb(null, file.fieldname + "_" + Date.now()  + path.extname(file.originalname))
+    }
+
+
+
+
+
+
+})
+
+
+
+
+const upload = multer({storage : storage})
+
+app.post("/api/upload", upload.single("file"), (req,res)=>{
+
+    console.log(req.file)
+    
+    
+
+})
+
+
+
 //middleware
 
 app.use(express.json())
@@ -70,14 +110,15 @@ app.use("/api/posts/", postRouter)
 
 
 
+
  
 
 
 
 
-app.listen(6600, ()=>{
+app.listen(6500, ()=>{
 
-    console.log ("listening on port 6600")
+    console.log ("listening on port 6500")
 
     connect()
 })

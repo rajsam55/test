@@ -13,7 +13,10 @@ import { Link } from "react-router-dom"
 
 const Users = ()=>{
 
+
     const {user}  = useContext(Context)
+
+    
     
     const [users, setUsers]  =  useState([])
 
@@ -25,18 +28,24 @@ const Users = ()=>{
 
 
 
-    useEffect(()=>{
-
-        const getUsers =  async()=>{
+        useEffect(()=>{
 
             setError(false)
+
+
+            const getUsers =  async()=>{
+
+            
 
             try {
 
 
-            const res = await axios.get("http://localhost:6600/api/users")
+            const res = await axios.get("http://localhost:6500/api/users/")
+
+            
 
             setUsers(res.data)
+            console.log(res.data)
             
             
 
@@ -45,21 +54,22 @@ const Users = ()=>{
 
                 setError(true)
 
-
-
-            }
-
-
+                }
 
             }
 
-        getUsers()
+            getUsers()
+
+        },[user])
+
+        
+        
 
 
 
             
 
-    })
+    
 
 
 
@@ -70,21 +80,22 @@ const Users = ()=>{
 
     
     <div className="">
-    <Navbar/>
+    
 
     
 
     { users.map(user=>(
 
         
-        <div className=""  key = {user.id}>
+        <div className="usersDtls"  key = {user.name}>
 
             <h1>Users</h1>
 
 
-        <Link to = {`/user${user._id}`}><span className="">{user.username}</span></Link>
+        <Link><span className="spanDtls">{user.username}</span></Link>
         <span className="">{user.password}</span>
         <span className="">{user.email}</span>
+        
 
 
 
